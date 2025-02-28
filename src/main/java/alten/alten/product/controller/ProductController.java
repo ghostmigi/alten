@@ -55,4 +55,13 @@ public class ProductController {
         productService.deleteProduct(id);
         return new ResponseEntity<>("Product deleted successfully", HttpStatus.NO_CONTENT);
     }
+
+    // Patch product
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductRequest> updateProductPartial(
+            @PathVariable("id") Long id,
+            @RequestBody ProductRequest productRequest) {
+        ProductRequest updatedProduct = productService.updateProductPartial(id, productRequest);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
 }

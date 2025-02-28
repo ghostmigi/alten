@@ -102,4 +102,27 @@ public class ProductService {
 
         productRepository.delete(product);
     }
+
+    // Patch request
+    public ProductRequest updateProductPartial(Long productId, ProductRequest productRequest) {
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+
+        if (productRequest.getCode() != null) existingProduct.setCode(productRequest.getCode());
+        if (productRequest.getName() != null) existingProduct.setName(productRequest.getName());
+        if (productRequest.getDescription() != null) existingProduct.setDescription(productRequest.getDescription());
+        if (productRequest.getImage() != null) existingProduct.setImage(productRequest.getImage());
+        if (productRequest.getCategory() != null) existingProduct.setCategory(productRequest.getCategory());
+        if (productRequest.getPrice() != null) existingProduct.setPrice(productRequest.getPrice());
+        if (productRequest.getQuantity() != null) existingProduct.setQuantity(productRequest.getQuantity());
+        if (productRequest.getInternalReference() != null) existingProduct.setInternalReference(productRequest.getInternalReference());
+        if (productRequest.getShellId() != null) existingProduct.setShellId(productRequest.getShellId());
+        if (productRequest.getInventoryStatus() != null) existingProduct.setInventoryStatus(productRequest.getInventoryStatus());
+        if (productRequest.getRating() != null) existingProduct.setRating(productRequest.getRating());
+        if (productRequest.getCreatedAt() != null) existingProduct.setCreatedAt(productRequest.getCreatedAt());
+
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return mapToProductRequest(updatedProduct);
+    }
 }
