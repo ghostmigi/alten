@@ -27,7 +27,6 @@ public class UserService {
         }
 
         User user = existingUser.get();
-        user.setUsername(userDetails.getUsername());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());

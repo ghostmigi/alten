@@ -13,15 +13,14 @@ import java.util.List;
 
 @Controller
 @RestController
-@RequestMapping("/users")
-@RequiredArgsConstructor
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     // Get users
-    @GetMapping
+    @GetMapping("/all/find-users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
