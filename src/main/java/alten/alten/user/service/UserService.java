@@ -19,18 +19,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Add user
-    public User createUser(User user) {
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("Email already exists");
-        }
-        if (user.getRole() == null) {
-            user.setRole(Role.USER);
-        }
-        return userRepository.save(user);
-    }
-
     // Update user
     public User updateUser(Long id, User userDetails) {
         Optional<User> existingUser = userRepository.findById(id);
