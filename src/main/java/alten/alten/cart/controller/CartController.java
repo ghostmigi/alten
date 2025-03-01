@@ -2,13 +2,15 @@ package alten.alten.cart.controller;
 
 import alten.alten.cart.model.Cart;
 import alten.alten.cart.service.CartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/cart")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class CartController {
 
     @Autowired
