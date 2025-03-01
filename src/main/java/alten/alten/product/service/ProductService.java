@@ -3,7 +3,11 @@ package alten.alten.product.service;
 import alten.alten.product.dto.ProductRequest;
 import alten.alten.product.model.Product;
 import alten.alten.product.repository.ProductRepository;
+import alten.alten.user.model.User;
+import alten.alten.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +18,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository ;
+
+    @Autowired
+    private UserRepository userRepository ;
 
     // Get all products
     public List<ProductRequest> getAllProducts() {
@@ -50,10 +57,19 @@ public class ProductService {
 
     // Create a new product
     public ProductRequest createProduct(ProductRequest productRequest) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = userDetails.getUsername();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
         Product product = mapToProductEntity(productRequest);
+        product.setUser(user);
+
         Product savedProduct = productRepository.save(product);
         return mapToProductRequest(savedProduct);
     }
+
 
     private Product mapToProductEntity(ProductRequest productRequest) {
         Product product = new Product();
