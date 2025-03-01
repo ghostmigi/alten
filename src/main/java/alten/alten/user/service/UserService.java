@@ -1,5 +1,6 @@
 package alten.alten.user.service;
 
+import alten.alten.user.model.Role;
 import alten.alten.user.model.User;
 import alten.alten.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserService {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Email already exists");
+        }
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
         }
         return userRepository.save(user);
     }
